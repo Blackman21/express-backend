@@ -5,7 +5,7 @@
   "main": "src/server.js",
   "scripts": {
     "test": "mocha --ui bdd test/**/*Spec.js",
-    "coverage":"istanbul cover --report html node_modules/.bin/_mocha -- -R spec"
+    "coverage": "istanbul cover --report html node_modules/.bin/_mocha -- -R spec"
   },
   "keywords": [
     "expressjs",
@@ -32,5 +32,9 @@
   },
   "directories": {
     "test": "test/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Blackman21/express-backend.git"
   }
 }
