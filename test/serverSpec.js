@@ -1,12 +1,15 @@
 'use strict';
 
 const chai = require('chai'),
-    request = require('request')
+    request = require('request'),
+    jwt = require('jsonwebtoken')
     ;
 
 const Server = require('../src/server');
 
 chai.use(require('chai-as-promised'));
+chai.use(require('chai-string'));
+
 var expect = chai.expect;
 
 describe('expressjs-backend test', () => {
@@ -29,5 +32,61 @@ describe('expressjs-backend test', () => {
             .then(() => {
                 return server.stop();
             });
+    });
+
+    describe('secure resource', () => {
+        let config = {
+            port: 3000,
+            appName: 'express-backend',
+            logging: true,
+            compression: true,
+            secure: {
+                prefix: ['/api/'],
+                jwt: {secret: 'password'}
+            }
+        };
+
+        let routes = [{prefix: '/api/', controller: require('./testController')}];
+        let server = new Server(config, routes);
+        let options = {
+            'auth': {
+                'bearer': jwt.sign({name:'test'}, 'password', {expiresIn: '1d'})
+            }
+        };
+
+        it('access success', () => {
+            return server.start()
+                .then(() => {
+                    return new Promise((resolve, reject) => {
+                        request('http://localhost:3000/api/', options, (error, response, body) => {
+                            expect(error).to.be.null;
+                            expect(response.statusCode).to.be.equal(200);
+                            let res = JSON.parse(body);
+                            expect(res.response).to.be.equal('index');
+                            resolve();
+                        })
+                    })
+                })
+                .then(() => {
+                    return server.stop();
+                });
+        });
+
+        it('access denied', () => {
+            return server.start()
+                .then(() => {
+                    return new Promise((resolve, reject) => {
+                        request('http://localhost:3000/api/', {}, (error, response, body) => {
+                            expect(error).to.be.null;
+                            expect(response.statusCode).to.be.equal(401);
+                            expect(body).to.startsWith('"No authorization token was found"');
+                            resolve();
+                        })
+                    })
+                })
+                .then(() => {
+                    return server.stop();
+                });
+        })
     })
 });

@@ -5,7 +5,9 @@ const express = require('express'),
     morgan = require('morgan'),
     compression = require('compression'),
     bodyParser = require('body-parser'),
-    extend = require('extend')
+    extend = require('extend'),
+    ejwt = require('express-jwt'),
+    errorHandler = require('./errors/errorHandler')
     ;
 
 class Server {
@@ -15,7 +17,7 @@ class Server {
         this.app = express();
         this.routes = routes;
         this.config = {};
-        extend(this.config, config, this.defaultConfig());
+        extend(true, this.config, config, this.defaultConfig());
     }
 
     get isRunning() {
@@ -34,7 +36,11 @@ class Server {
         self.app.use(bodyParser.urlencoded({extended: false}));
         self.app.use(bodyParser.json());
 
+        self.registerJwt();
+
         self.registerRoutes();
+
+        self.app.use(errorHandler);
 
         return new Promise((resolve, reject) => {
             self.server = self.app.listen(self.config.port, (err) => {
@@ -84,12 +90,24 @@ class Server {
         }
     }
 
+    registerJwt() {
+        if (!this.config.secure || !this.config.secure.prefix || !this.config.secure.jwt)
+            return;
+
+        for (let prefix of this.config.secure.prefix) {
+            this.app.use(prefix, ejwt(this.config.secure.jwt))
+        }
+    }
+
     defaultConfig() {
         return {
             port: 3000,
             appName: 'express-backend',
             logging: true,
-            compression: true
+            compression: true,
+            secure: {
+                prefix: []
+            }
         }
     }
 }

@@ -18,6 +18,7 @@
     "body-parser": "^1.15.2",
     "compression": "^1.6.2",
     "express": "^4.14.0",
+    "express-jwt": "^5.0.0",
     "extend": "^3.0.0",
     "morgan": "^1.7.0"
   },
@@ -25,7 +26,9 @@
     "chai": "^3.5.0",
     "chai-as-promised": "^5.3.0",
     "chai-datetime": "^1.4.1",
+    "chai-string": "^1.2.0",
     "istanbul": "^0.4.5",
+    "jsonwebtoken": "^7.1.9",
     "mocha": "^2.4.5",
     "request": "^2.75.0",
     "supertest": "^1.2.0"
