@@ -2,7 +2,7 @@
 
 class ValidationError extends Error{
     constructor(message, extra){
-        Error.captureStackTrace(this, this.constructor);
+        super();
         this.name = this.constructor.name;
         this.message = message;
         this.extra = extra;

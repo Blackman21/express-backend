@@ -1,8 +1,8 @@
 {
   "name": "expressjs-backend",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "expressjs general backend",
-  "main": "src/server.js",
+  "main": "index.js",
   "scripts": {
     "test": "mocha --ui bdd test/**/*Spec.js",
     "coverage": "istanbul cover --report html node_modules/.bin/_mocha -- -R spec"

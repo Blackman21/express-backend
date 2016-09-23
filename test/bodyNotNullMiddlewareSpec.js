@@ -2,7 +2,8 @@
 
 const chai = require('chai'),
     request = require('supertest'),
-    server = require('./testServer');
+    server = require('./testServer')
+    ;
 
 const expect = chai.expect;
 

@@ -10,11 +10,11 @@ const Server = require('../src/server');
 chai.use(require('chai-as-promised'));
 chai.use(require('chai-string'));
 
-var expect = chai.expect;
+const expect = chai.expect;
 
 describe('expressjs-backend test', () => {
 
-    it('start and stop server with default config', () => {
+    it('start and stop Server with default config', () => {
         let routes = [{controller: require('./testController')}];
         let server = new Server({}, routes);
         return server.start()
