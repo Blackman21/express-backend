@@ -13,7 +13,7 @@ const express = require('express'),
 class Server {
 
     constructor(config, routes) {
-        this._isRunning = false;
+        this.running = false;
         this.app = express();
         this.routes = routes;
         this.config = {};
@@ -21,7 +21,7 @@ class Server {
     }
 
     get isRunning() {
-        return this._isRunning;
+        return this.running;
     }
 
     start() {

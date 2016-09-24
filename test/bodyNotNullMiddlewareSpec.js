@@ -9,7 +9,6 @@ const expect = chai.expect;
 
 describe('bodyNotNullMiddleware test', () => {
 
-    // it's not relevant because body-parser always create req.body
     xit('no body of the request', (done) => {
         request(server)
             .post('/body-null')

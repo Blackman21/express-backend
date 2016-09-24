@@ -2,15 +2,11 @@
 
 const express = require('express'),
     bodyParser = require('body-parser'),
-    TestController = require('./testController')
+    testController = require('./testController')
     ;
-
-let dependency = {
-    response: 'index'
-};
 
 let server = express();
 server.use(bodyParser.json());
-server.use('/', new TestController(dependency));
+server.use('/', testController);
 
 module.exports = server;

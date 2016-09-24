@@ -1,21 +1,14 @@
 "use strict";
 
-const Router = require('express').Router,
+const router = require('express').Router(),
     bodyNotNullMiddleware = require('../src/middlewares/bodyNotNullMiddleware');
 
-class TestController extends Router {
-    constructor(dependency) {
-        super();
-        this.dependecy = dependency;
-
-        this.get('/', [_index]);
-        this.post('/body-null', [bodyNotNullMiddleware, _index]);
-
-        function _index(req, res) {
-            res.json({response: dependency.response})
-        }
-    }
+function index(req, res){
+    res.json({response:'index'})
 }
 
-module.exports = TestController;
+router.get('/', [index]);
 
+router.post('/body-null', [bodyNotNullMiddleware, index]);
+
+module.exports = router;

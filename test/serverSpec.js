@@ -5,8 +5,7 @@ const chai = require('chai'),
     jwt = require('jsonwebtoken')
     ;
 
-const Server = require('../src/server'),
-    TestController = require('./testController');
+const Server = require('../src/server');
 
 chai.use(require('chai-as-promised'));
 chai.use(require('chai-string'));
@@ -14,14 +13,10 @@ chai.use(require('chai-string'));
 const expect = chai.expect;
 
 describe('expressjs-backend test', () => {
-    let dependency = {
-        response: 'index'
-    };
 
     it('start and stop Server with default config', () => {
-        let routes = [{controller: new TestController(dependency)}];
+        let routes = [{controller: require('./testController')}];
         let server = new Server({}, routes);
-
         return server.start()
             .then(() => {
                 return new Promise((resolve, reject) => {
@@ -30,16 +25,12 @@ describe('expressjs-backend test', () => {
                         expect(response.statusCode).to.be.equal(200);
                         let res = JSON.parse(body);
                         expect(res.response).to.be.equal('index');
-                         expect(server.isRunning).to.be.true;
                         resolve();
                     })
                 })
             })
             .then(() => {
                 return server.stop();
-            })
-            .then(()=>{
-                expect(server.isRunning).to.be.false;
             });
     });
 
@@ -55,11 +46,11 @@ describe('expressjs-backend test', () => {
             }
         };
 
-        let routes = [{prefix: '/api/', controller: new TestController(dependency)}];
+        let routes = [{prefix: '/api/', controller: require('./testController')}];
         let server = new Server(config, routes);
         let options = {
             'auth': {
-                'bearer': jwt.sign({name: 'test'}, 'password', {expiresIn: '1d'})
+                'bearer': jwt.sign({name:'test'}, 'password', {expiresIn: '1d'})
             }
         };
 
