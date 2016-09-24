@@ -1,6 +1,6 @@
 {
   "name": "expressjs-backend",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "expressjs general backend",
   "main": "index.js",
   "scripts": {
