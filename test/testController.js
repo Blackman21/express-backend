@@ -1,10 +1,10 @@
 "use strict";
 
 const router = require('express').Router(),
-    bodyNotNullMiddleware = require('../src/middlewares/bodyNotNullMiddleware');
+  bodyNotNullMiddleware = require('../src/middlewares/bodyNotNullMiddleware');
 
-function index(req, res){
-    res.json({response:'index'})
+function index(req, res) {
+  res.json({response: 'index'})
 }
 
 router.get('/', [index]);

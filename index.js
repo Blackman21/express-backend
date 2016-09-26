@@ -1,7 +1,7 @@
 const Server = require('./src/server'),
-    ValidationError = require('./src/errors/validationError'),
-    errorHandler = require('./src/errors/errorHandler')
-;
+  ValidationError = require('./src/errors/validationError'),
+  errorHandler = require('./src/errors/errorHandler')
+  ;
 
 exports = module.exports = Server;
 
