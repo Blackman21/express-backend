@@ -38,6 +38,13 @@ class Server {
 
     self.registerJwt();
 
+    if (self.config.cors.allowInDevelopment)
+      self.app.use(function (req, res, next) {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        next();
+      });
+
     self.registerRoutes();
 
     self.app.use(errorHandler);
@@ -105,10 +112,20 @@ class Server {
       appName: 'express-backend',
       logging: true,
       compression: true,
+      cors: {
+        allowInDevelopment: this.allowInDevelopment()
+      },
       secure: {
         prefix: []
       }
     }
+  }
+
+  allowInDevelopment() {
+    if (!process.env.ENV)
+      return true;
+
+    return process.env.ENV.toLowerCase() !== 'production';
   }
 }
 

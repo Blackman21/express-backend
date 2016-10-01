@@ -1,6 +1,6 @@
 {
   "name": "expressjs-backend",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "expressjs general backend",
   "main": "index.js",
   "scripts": {
@@ -38,6 +38,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Blackman21/express-backend.git"
+    "url": "https://github.com/ert78gb/express-backend.git"
   }
 }
