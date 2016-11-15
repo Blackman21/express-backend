@@ -17,7 +17,7 @@ class Server {
     this.app = express();
     this.routes = routes;
     this.config = {};
-    extend(true, this.config, config, this.defaultConfig());
+    extend(true, this.config, this.defaultConfig(), config);
   }
 
   get isRunning() {
@@ -102,7 +102,7 @@ class Server {
       return;
 
     for (let prefix of this.config.secure.prefix) {
-      this.app.use(prefix, ejwt(this.config.secure.jwt))
+      this.app.use(prefix, ejwt({secret:this.config.secure.jwt}))
     }
   }
 
